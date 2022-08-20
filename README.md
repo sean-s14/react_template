@@ -2,7 +2,7 @@
 
 This template comes with `mui` for styling and components, and `react-router-dom` for navigation
 
-There are some pages already created with the navigation already setup:
+There are some pages already created with the navigation setup:
 - Home
 - Projects
 - Articles
@@ -18,7 +18,7 @@ There are some pages already created with the navigation already setup:
 
 ### Not Included
 
-There is not `.env` file. If you want to open development server on custom host and port then create an `.env` file and add the following:
+There is no `.env` file. If you want to open development server on custom host and port then create an `.env` file and add the following:
 ```
 HOST=xxx.xxx.x.xxx
 PORT=8000
