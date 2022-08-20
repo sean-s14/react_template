@@ -1,13 +1,14 @@
 
 import { PageContainer } from "pages/pageContainer";
 
-const AboutPage = () => {
+
+const PoliciesPage = (props) => {
 
     return (
         <PageContainer>
-            <h1>About Page</h1>
+            <h1>Policies Page</h1>
         </PageContainer>
-    );
+    )
 };
 
-export { AboutPage };
+export { PoliciesPage };

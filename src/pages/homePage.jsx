@@ -1,14 +1,12 @@
 
-import { Link } from "react-router-dom";
-
+import { PageContainer } from "pages/pageContainer";
 
 const HomePage = () => {
 
     return (
-        <div>
+        <PageContainer>
             <h1>Home Page</h1>
-            <Link to="about">About</Link>
-        </div>
+        </PageContainer>
     );
 };
 
