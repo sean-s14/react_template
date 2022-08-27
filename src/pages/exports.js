@@ -1,6 +1,6 @@
 import { HomePage } from "./homePage";
-import { ProjectsPage } from "./projectsPage";
-import { ArticlesPage } from "./articlesPage";
+import { ProjectsPage } from "./other/projectsPage";
+import { ArticlesPage } from "./other/articlesPage";
 import { AboutPage } from "./aboutPage";
 import { PoliciesPage } from "./policiesPage";
 
