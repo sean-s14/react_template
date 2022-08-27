@@ -2,13 +2,13 @@ import axios from 'axios';
 import jwt_decode from "jwt-decode";
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import { useAuth, useAuthUpdate } from '~/src/providers/exports';
+import { useAuth, useAuthUpdate } from 'contexts/exports';
 
 
 const baseURL = process.env.NODE_ENV === 'development'
     ? 'http://192.168.1.153:9000/'
-        ? process.env.NODE_ENV === 'production'
-            : 'http://192.168.1.153:9000/'
+    : process.env.NODE_ENV === 'production'
+        ? 'http://192.168.1.153:9000/'
         : null
 
 
