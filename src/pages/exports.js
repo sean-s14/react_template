@@ -3,7 +3,7 @@ import { ProjectsPage } from "./other/projectsPage";
 import { ArticlesPage } from "./other/articlesPage";
 import { AboutPage } from "./aboutPage";
 import { PoliciesPage } from "./policiesPage";
-
+import LoginPage from "./auth/Login";
 
 export {
     HomePage,
@@ -11,4 +11,6 @@ export {
     ArticlesPage,
     AboutPage,
     PoliciesPage,
+
+    LoginPage,
 }

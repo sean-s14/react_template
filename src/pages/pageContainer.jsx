@@ -2,15 +2,16 @@
 import Box from '@mui/material/Box'
 
 
-const PageContainer = (props) => {
+const PageContainer = ({children, style}) => {
 
     return (
         <Box
             sx={{
-                padding: "15px"
+                padding: "15px",
+                ...style
             }}
         >
-            {props.children}
+            {children}
         </Box>
     )
 }

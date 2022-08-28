@@ -21,13 +21,22 @@ import FeedIcon from '@mui/icons-material/Feed';
 import ArticleIcon from '@mui/icons-material/Article';
 import DevicesIcon from '@mui/icons-material/Devices';
 import MenuIcon from '@mui/icons-material/Menu';
+import LoginIcon from '@mui/icons-material/Login';
 
 import { useTheme } from "@mui/material/styles";
+
+import { useAuth } from 'contexts/exports';
 
 
 export default function NavigationDrawer() {
 
     const theme = useTheme();
+    const auth = useAuth();
+
+    useEffect( () => {
+        console.log("Auth:", auth)
+        console.log("Access Tokens:", auth?.tokens?.access)
+    }, [auth])
 
     const [state, setState] = React.useState({ left: false });
 
@@ -68,6 +77,12 @@ export default function NavigationDrawer() {
             icon: <FeedIcon />
         },
     ]
+
+    !auth?.tokens?.access && routes2.push({
+        name: "Login",
+        path: "login",
+        icon: <LoginIcon />
+    })
 
     useEffect( () => {
         console.log(theme)
