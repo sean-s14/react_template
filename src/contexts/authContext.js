@@ -24,18 +24,18 @@ function AuthProvider({children}) {
         console.log("New User Data :", newUserData)
         if (newUserData === 'clear') {
             // Clear Auth Data
-            localStorage.setItem('userData', {});
+            localStorage.setItem('userData', JSON.stringify({}));
             setUserData({});
         } else {
             try {
-                let oldUserData = localStorage.getItem('userData');
+                let oldUserData = JSON.parse(localStorage.getItem('userData'));
                 console.log('Old User Data :', typeof oldUserData, ':', oldUserData);
                 newUserData = {
                     ...oldUserData, 
                     ...newUserData
                 };
                 // await AsyncStorage.setItem('userData', newUserData);
-                localStorage.setItem('userData', newUserData);
+                localStorage.setItem('userData', JSON.stringify(newUserData));
                 setUserData(newUserData);
             } catch (e) { console.log(e); }
         }
@@ -43,10 +43,12 @@ function AuthProvider({children}) {
 
     const getUserData = async () => {
         try {
-            const newUserData = localStorage.getItem('userData');
+            const newUserData = JSON.parse(localStorage.getItem('userData'));
             console.log("New User Data :", newUserData);
             if (newUserData !== null && newUserData !== '') { 
                 setUserData(newUserData);
+            } else {
+                setUserData({'empty': true})
             }
         } catch(e) {
             console.log(e);
@@ -61,7 +63,8 @@ function AuthProvider({children}) {
     useEffect( () => {
         getUserData();
     }, []);
-
+    
+    if (Object.keys(userData).length <= 0) return null;
 
     return (
         <AuthContext.Provider value={userData}>
