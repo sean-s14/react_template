@@ -3,15 +3,13 @@
 // import { useTheme } from '@mui/material/styles';
 
 
-const SubmitButton = ({title, style, onClick }) => {
+const Button = ({title, style, onClick }) => {
 
     // const theme = useTheme();
 
     return (
-        <input
+        <button
             type={"submit"}
-            onClick={ onClick}
-            value={ title || "Click Me" }
             style={{
                 width: '20rem',
                 height: '2.5rem',
@@ -27,8 +25,10 @@ const SubmitButton = ({title, style, onClick }) => {
                 cursor: 'pointer',
                 ...style,
             }}
-        />
+        >
+            {title}
+        </button>
     )
 }
 
-export default SubmitButton;
+export default Button;

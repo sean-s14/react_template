@@ -1,19 +1,17 @@
 
-// import { useState } from 'react';
+// import { useState, useEffect } from 'react';
 // import { useTheme } from '@mui/material/styles';
 
 
-const Input = ({value, placeholder, onChange, style, type}) => {
+const InputSubmit = ({title, style, onClick }) => {
 
     // const theme = useTheme();
-    // const [text, setText] = useState("");
 
     return (
         <input
-            type={ type || 'text' }
-            value={ value || '' }
-            placeholder={ placeholder }
-            onChange={ onChange }
+            type={"submit"}
+            onClick={ onClick}
+            value={ title || "Click Me" }
             style={{
                 width: '20rem',
                 height: '2.5rem',
@@ -21,14 +19,16 @@ const Input = ({value, placeholder, onChange, style, type}) => {
                 border: 'none',
                 paddingLeft: '0.5rem',
                 paddingRight: '0.5rem',
-                fontSize: '1.1rem',
+                fontSize: '1.2rem',
+                fontWeight: '900',
                 textAlign: 'center',
                 marginTop: '.5rem',
                 marginBottom: '.5rem',
+                cursor: 'pointer',
                 ...style,
             }}
         />
     )
 }
 
-export default Input;
+export default InputSubmit;

@@ -1,7 +1,9 @@
 import Input from './Input';
-import SubmitButton from './SubmitButton';
+import InputSubmit from './InputSubmit';
+import Button from './Button';
 
 export {
     Input,
-    SubmitButton,
+    InputSubmit,
+    Button,
 }
