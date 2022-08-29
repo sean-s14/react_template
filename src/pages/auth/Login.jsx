@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
 import { PageContainer } from "pages/pageContainer";
-import { Input, Button } from "components/exports";
+import { Input, Button, Form } from "components/exports";
 import { useAxios } from 'hooks/exports';
 import { useAuthUpdate } from 'contexts/exports';
 
@@ -58,14 +58,7 @@ const LoginPage = (props) => {
             }}
         >
             <h1>Login Page</h1>
-            <form
-                onSubmit={ logIn }
-                style={{
-                    maxWidth: '20rem',
-                    display: 'flex',
-                    flexDirection: 'column',
-                }}
-            >
+            <Form onSubmit={ logIn } >
                 <Input
                     placeholder={"username / email"} 
                     value={ form.username } 
@@ -78,7 +71,7 @@ const LoginPage = (props) => {
                     onChange={ (e) => setForm({...form, password: e.target.value}) } 
                 />
                 <Button title={"Login"} />
-            </form>
+            </Form>
         </PageContainer>
     )
 }
