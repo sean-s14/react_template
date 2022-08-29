@@ -45,7 +45,7 @@ function AuthProvider({children}) {
         try {
             const newUserData = JSON.parse(localStorage.getItem('userData'));
             console.log("New User Data :", newUserData);
-            if (newUserData !== null && newUserData !== '') { 
+            if (newUserData !== null && newUserData !== '' && Object.keys(newUserData).length !== 0) { 
                 setUserData(newUserData);
             } else {
                 setUserData({'empty': true})
