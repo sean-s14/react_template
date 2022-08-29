@@ -4,6 +4,8 @@ import { ArticlesPage } from "./other/articlesPage";
 import { AboutPage } from "./aboutPage";
 import { PoliciesPage } from "./policiesPage";
 import LoginPage from "./auth/Login";
+import SignupPage from "./auth/Signup";
+import VerificationPage from "./auth/Verification";
 
 export {
     HomePage,
@@ -13,4 +15,6 @@ export {
     PoliciesPage,
 
     LoginPage,
+    SignupPage,
+    VerificationPage,
 }

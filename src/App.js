@@ -9,6 +9,8 @@ import {
   PoliciesPage,
 
   LoginPage,
+  SignupPage,
+  VerificationPage,
 } from 'pages/exports';
 import NavigationDrawer from 'layout/navigationDrawer';
 import { useAuth } from 'contexts/exports';
@@ -22,7 +24,8 @@ export default function App() {
 
   useEffect( () => {
     console.log("Auth:", auth);
-    setLoggedIn(!auth?.tokens?.access);
+    console.log("Logged In:", !!auth?.tokens?.access);
+    setLoggedIn(!!auth?.tokens?.access);
   }, [auth])
 
   if (loggedIn === null) return null;
@@ -37,7 +40,13 @@ export default function App() {
         <Route path="about" element={<AboutPage />}/>
         <Route path="policies" element={<PoliciesPage />}/>
 
-        { !auth?.tokens?.access && <Route path="login" element={<LoginPage />}/> }
+        { !loggedIn && 
+          <>
+            <Route path="login" element={<LoginPage />}/>
+            <Route path="signup" element={<SignupPage />}/>
+            <Route path="verify" element={<VerificationPage />}/>
+          </>
+        }
         <Route path="*" element={<Navigate to="/" replace /> }/>
       </Routes>
     </>
