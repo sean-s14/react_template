@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
 import { PageContainer } from "pages/pageContainer";
-import { Input, Button, Form } from "components/exports";
+import { Input, FormButton, Form } from "components/exports";
 import { useAxios } from 'hooks/exports';
 
 
@@ -99,7 +99,7 @@ const SignupPage = (props) => {
                     type={"password"}
                     onChange={ (e) => setForm({...form, password2: e.target.value}) } 
                 />
-                <Button title={"Signup"} />
+                <FormButton title={"Signup"} />
             </Form>
         </PageContainer>
     )

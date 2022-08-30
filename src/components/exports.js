@@ -1,11 +1,11 @@
 import Input from './Input';
 import InputSubmit from './InputSubmit';
-import Button from './Button';
+import FormButton from './FormButton';
 import Form from './Form';
 
 export {
     Input,
     InputSubmit,
-    Button,
+    FormButton,
     Form,
 }

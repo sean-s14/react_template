@@ -24,6 +24,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';  // For signup
+import SettingsIcon from '@mui/icons-material/Settings';
 
 import { useTheme } from "@mui/material/styles";
 
@@ -83,6 +84,11 @@ export default function NavigationDrawer() {
 
     auth?.tokens?.access 
         ? routes2.push({
+            name: "Settings",
+            path: "settings",
+            icon: <SettingsIcon />,
+            },
+            {
             name: "Logout",
             path: "logout",
             icon: <LogoutIcon />,

@@ -3,7 +3,7 @@
 // import { useTheme } from '@mui/material/styles';
 
 
-const Button = ({title, style, onClick }) => {
+const FormButton = ({title, style, onClick }) => {
 
     // const theme = useTheme();
 
@@ -31,4 +31,4 @@ const Button = ({title, style, onClick }) => {
     )
 }
 
-export default Button;
+export default FormButton;

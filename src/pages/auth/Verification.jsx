@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
 
 import { PageContainer } from "pages/pageContainer";
-import { Input, Button, Form } from "components/exports";
+import { Input, FormButton, Form } from "components/exports";
 import { useAxios } from 'hooks/exports';
 import { useAuthUpdate } from 'contexts/exports';
 
@@ -79,7 +79,7 @@ const VerificationPage = (props) => {
                     value={ form.code } 
                     onChange={ (e) => setForm({...form, code: e.target.value}) } 
                 />
-                <Button title={"Verify"} />
+                <FormButton title={"Verify"} />
             </Form>
         </PageContainer>
     )
