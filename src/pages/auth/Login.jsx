@@ -124,7 +124,7 @@ const LoginPage = (props) => {
                     variant="contained" 
                     sx={{}}
                 >
-                    <Link to="">Forgot Your Password?</Link>
+                    <Link to="/password-reset">Forgot Your Password?</Link>
                 </Button>
             </Stack>
         </PageContainer>

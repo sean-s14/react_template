@@ -13,6 +13,7 @@ import {
   VerificationPage,
   SettingsPage,
   PasswordChangePage,
+  PasswordResetPage,
 } from 'pages/exports';
 import NavigationDrawer from 'layout/navigationDrawer';
 import { useAuth } from 'contexts/exports';
@@ -47,6 +48,7 @@ export default function App() {
               <Route path="login" element={<LoginPage />}/>
               <Route path="signup" element={<SignupPage />}/>
               <Route path="verify" element={<VerificationPage />}/>
+              <Route path="password-reset" element={<PasswordResetPage />}/>
             </>
           :
             <>
