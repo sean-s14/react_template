@@ -12,6 +12,7 @@ import {
   SignupPage,
   VerificationPage,
   SettingsPage,
+  PasswordChangePage,
 } from 'pages/exports';
 import NavigationDrawer from 'layout/navigationDrawer';
 import { useAuth } from 'contexts/exports';
@@ -50,6 +51,7 @@ export default function App() {
           :
             <>
               <Route path="settings" element={<SettingsPage />}/>
+              <Route path="password-change" element={<PasswordChangePage />}/>
             </>
         }
         <Route path="*" element={<Navigate to="/" replace /> }/>

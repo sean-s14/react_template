@@ -1,10 +1,14 @@
 
 import { useState } from 'react';
-// import { useTheme } from '@mui/material/styles';
-import { useNavigate } from "react-router-dom";
+import { useTheme } from '@mui/material/styles';
+import { useNavigate, Link } from "react-router-dom";
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import Divider from '@mui/material/Divider';
+import TextField from '@mui/material/TextField';
 
 import { PageContainer } from "pages/pageContainer";
-import { Input, FormButton, Form } from "components/exports";
+// import { Input, FormButton, Form } from "components/exports";
 import { useAxios } from 'hooks/exports';
 import { useAuthUpdate } from 'contexts/exports';
 
@@ -12,7 +16,7 @@ import { useAuthUpdate } from 'contexts/exports';
 const LoginPage = (props) => {
 
     // Theme
-    // const theme = useTheme();
+    const theme = useTheme();
 
     // Auth
     const updateAuthData = useAuthUpdate();
@@ -21,9 +25,9 @@ const LoginPage = (props) => {
     const navigate = useNavigate();
     const [form, setForm] = useState({});
 
-    const logIn = (e) => {
-        e.preventDefault();
+    const logIn = () => {
         
+        if ( Object.keys(form).length < 2 ) { return };
         if ( form.username && form.username.length === 0 ) { return };
         if ( form.password && form.password.length === 0 ) { return };
 
@@ -37,6 +41,7 @@ const LoginPage = (props) => {
             .then( res => {
                 console.log("Res?.data:", res?.data);
                 res?.data && updateAuthData({tokens: res.data});
+                setForm({});
                 navigate("/", { replace: true });
             })
             .catch( err => {
@@ -71,21 +76,55 @@ const LoginPage = (props) => {
                 justifyContent: 'center',
             }}
         >
-            <h1>Login Page</h1>
-            <Form onSubmit={ logIn } >
-                <Input
-                    placeholder={"username / email"} 
-                    value={ form.username } 
-                    onChange={ (e) => setForm({...form, username: e.target.value}) } 
-                    />
-                <Input 
-                    placeholder={"password"} 
-                    value={ form.password } 
-                    type={"password"}
-                    onChange={ (e) => setForm({...form, password: e.target.value}) } 
+            <h1>Login</h1>
+            <Stack 
+                spacing={2} 
+                direction="column"
+                sx={{
+                    width: '18rem',
+                    '& > button, & > div': {
+                        width: '100%',
+                        color: theme.palette.primary.light,
+                        fontSize: '1rem',
+                        '& > input': {
+                            fontSize: '1.3rem',
+                        },
+                        '& > a': {
+                            fontSize: '1rem',
+                            textDecoration: 'none',
+                            color: theme.palette.primary.light
+                        }
+                    },
+                }}
+            >
+                <TextField 
+                    value={ form.username || '' } 
+                    onChange={ (e) => setForm({...form, username: e.target.value}) }
+                    sx={{textAlign: 'center'}}
+                    label={'username'}
                 />
-                <FormButton title={"Login"} />
-            </Form>
+                <TextField 
+                    value={ form.password || '' } 
+                    onChange={ (e) => setForm({...form, password: e.target.value}) } 
+                    label={'password'}
+                />
+                <Button 
+                    variant="contained" 
+                    sx={{}}
+                    onClick={ logIn }
+                >
+                    Login
+                </Button>
+
+                <Divider />
+                
+                <Button 
+                    variant="contained" 
+                    sx={{}}
+                >
+                    <Link to="">Forgot Your Password?</Link>
+                </Button>
+            </Stack>
         </PageContainer>
     )
 }

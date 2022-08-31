@@ -114,7 +114,7 @@ const SettingsPage = (props) => {
                     variant="contained" 
                     sx={{}}
                 >
-                    <Link to="">Change Password</Link>
+                    <Link to="/password-change">Change Password</Link>
                 </Button>
             </Stack>
             

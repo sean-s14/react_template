@@ -7,6 +7,7 @@ import LoginPage from "./auth/Login";
 import SignupPage from "./auth/Signup";
 import VerificationPage from "./auth/Verification";
 import SettingsPage from "./auth/Settings";
+import PasswordChangePage from "./auth/PasswordChange";
 
 export {
     HomePage,
@@ -19,4 +20,5 @@ export {
     SignupPage,
     VerificationPage,
     SettingsPage,
+    PasswordChangePage,
 }
