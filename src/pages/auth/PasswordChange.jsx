@@ -72,21 +72,24 @@ const PasswordChangePage = (props) => {
                     onChange={ (e) => handlePassword(e, 'old_password') }
                     sx={{textAlign: 'center'}}
                     // label={'password'}
-                    required
+                    type={"password"}
+                    required={true}
                 />
                 <TextField 
                     value={ form.new_password || '' } 
                     placeholder={ 'new password' }
                     onChange={ (e) => handlePassword(e, 'new_password') }
                     // label={'email'}
-                    required
+                    type={"password"}
+                    required={true}
                 />
                 <TextField 
                     value={ form.new_password2 || '' } 
                     placeholder={ 'new password again' }
                     onChange={ (e) => handlePassword(e, 'new_password2') }
                     // label={'password'}
-                    required
+                    type={"password"}
+                    required={true}
                 />
                 <Button 
                     variant="contained" 

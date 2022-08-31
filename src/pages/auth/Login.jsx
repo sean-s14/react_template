@@ -8,7 +8,6 @@ import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
 
 import { PageContainer } from "pages/pageContainer";
-// import { Input, FormButton, Form } from "components/exports";
 import { useAxios } from 'hooks/exports';
 import { useAuthUpdate } from 'contexts/exports';
 
@@ -102,11 +101,14 @@ const LoginPage = (props) => {
                     onChange={ (e) => setForm({...form, username: e.target.value}) }
                     sx={{textAlign: 'center'}}
                     label={'username'}
+                    required={true}
                 />
                 <TextField 
                     value={ form.password || '' } 
                     onChange={ (e) => setForm({...form, password: e.target.value}) } 
                     label={'password'}
+                    type={"password"}
+                    required={true}
                 />
                 <Button 
                     variant="contained" 

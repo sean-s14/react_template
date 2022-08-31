@@ -1,17 +1,20 @@
 
 import { useState } from 'react';
-// import { useTheme } from '@mui/material/styles';
-import { useNavigate } from "react-router-dom";
+import { useTheme } from '@mui/material/styles';
+import { useNavigate, Link } from "react-router-dom";
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import Divider from '@mui/material/Divider';
+import TextField from '@mui/material/TextField';
 
 import { PageContainer } from "pages/pageContainer";
-import { Input, FormButton, Form } from "components/exports";
 import { useAxios } from 'hooks/exports';
 
 
 const SignupPage = (props) => {
 
     // Theme
-    // const theme = useTheme();
+    const theme = useTheme();
 
     // Auth
     const api = useAxios();
@@ -19,8 +22,9 @@ const SignupPage = (props) => {
     const navigate = useNavigate();
     const [form, setForm] = useState({});
 
-    const signUp = (e) => {
-        e.preventDefault();
+    const signUp = () => {
+
+        if ( Object.keys(form).length < 3 ) { return };
         
         // if ( form.username && form.username.length === 0 ) { return }
         if ( form.email && form.email.length === 0 ) { return }
@@ -33,13 +37,7 @@ const SignupPage = (props) => {
             return
         }
 
-        // let data = JSON.stringify(form);
-        let data = {
-            email: 'test12@gmail.com',
-            password: 'S3an1234',
-            password2: 'S3an1234',
-        }
-        api.post("auth/user/create/", JSON.stringify(data))
+        api.post("auth/user/create/", JSON.stringify(form))
             .then( res => {
                 console.log("Res?.data:", res?.data);
                 navigate(
@@ -47,8 +45,8 @@ const SignupPage = (props) => {
                     { 
                         replace: true, 
                         state: { 
-                            email: data.email,
-                            password: data.password,
+                            email: form.email,
+                            password: form.password,
                         } 
                     });
             })
@@ -75,32 +73,71 @@ const SignupPage = (props) => {
                 justifyContent: 'center',
             }}
         >
-            <h1>Signup Page</h1>
-            <Form onSubmit={ signUp } >
-                <Input
-                    placeholder={"username"} 
-                    value={ form.username } 
-                    onChange={ (e) => setForm({...form, username: e.target.value}) } 
+            <h1>Signup</h1>
+            <Stack 
+                spacing={2} 
+                direction="column"
+                sx={{
+                    width: '18rem',
+                    '& > button, & > div': {
+                        width: '100%',
+                        color: theme.palette.primary.light,
+                        fontSize: '1rem',
+                        '& > input': {
+                            fontSize: '1.3rem',
+                        },
+                        '& > a': {
+                            fontSize: '1rem',
+                            textDecoration: 'none',
+                            color: theme.palette.primary.light
+                        }
+                    },
+                }}
+            >
+                <TextField 
+                    value={ form.username || '' } 
+                    onChange={ (e) => setForm({...form, username: e.target.value}) }
+                    sx={{textAlign: 'center'}}
+                    label={'username'}
                 />
-                <Input
-                    placeholder={"email"} 
-                    value={ form.email } 
+                <TextField 
+                    value={ form.email || '' } 
                     onChange={ (e) => setForm({...form, email: e.target.value}) } 
+                    label={'email'}
+                    type={"email"}
+                    required={true}
                 />
-                <Input 
-                    placeholder={"password"} 
-                    value={ form.password } 
-                    type={"password"}
+                <TextField 
+                    value={ form.password || '' } 
                     onChange={ (e) => setForm({...form, password: e.target.value}) } 
-                />
-                <Input 
-                    placeholder={"password"} 
-                    value={ form.password2 } 
+                    label={'password'}
                     type={"password"}
-                    onChange={ (e) => setForm({...form, password2: e.target.value}) } 
+                    required={true}
                 />
-                <FormButton title={"Signup"} />
-            </Form>
+                <TextField 
+                    value={ form.password || '' } 
+                    onChange={ (e) => setForm({...form, password2: e.target.value}) } 
+                    label={'password again'}
+                    type={"password"}
+                    required={true}
+                />
+                <Button 
+                    variant="contained" 
+                    sx={{}}
+                    onClick={ signUp }
+                >
+                    Signup
+                </Button>
+
+                <Divider />
+                
+                <Button 
+                    variant="contained" 
+                    sx={{}}
+                >
+                    <Link to="/password-reset">Forgot Your Password?</Link>
+                </Button>
+            </Stack>
         </PageContainer>
     )
 }
