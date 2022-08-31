@@ -23,8 +23,8 @@ const Input = ({value, placeholder, onChange, style, type}) => {
                 paddingRight: '0.5rem',
                 fontSize: '1.1rem',
                 textAlign: 'center',
-                marginTop: '.5rem',
-                marginBottom: '.5rem',
+                // marginTop: '.5rem',
+                // marginBottom: '.5rem',
                 ...style,
             }}
         />

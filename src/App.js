@@ -40,14 +40,17 @@ export default function App() {
         <Route path="articles" element={<ArticlesPage />}/>
         <Route path="about" element={<AboutPage />}/>
         <Route path="policies" element={<PoliciesPage />}/>
-        <Route path="settings" element={<SettingsPage />}/>
 
-        { !loggedIn && 
-          <>
-            <Route path="login" element={<LoginPage />}/>
-            <Route path="signup" element={<SignupPage />}/>
-            <Route path="verify" element={<VerificationPage />}/>
-          </>
+        { !loggedIn
+          ? <>
+              <Route path="login" element={<LoginPage />}/>
+              <Route path="signup" element={<SignupPage />}/>
+              <Route path="verify" element={<VerificationPage />}/>
+            </>
+          :
+            <>
+              <Route path="settings" element={<SettingsPage />}/>
+            </>
         }
         <Route path="*" element={<Navigate to="/" replace /> }/>
       </Routes>

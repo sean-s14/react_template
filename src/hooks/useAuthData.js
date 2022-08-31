@@ -46,7 +46,7 @@ const useAuthData = () => {
         }
 
         return () => { isMounted = false };
-    }, [])
+    }, [auth])
 
     useEffect( () => {
         accessToken !== null && 

@@ -24,11 +24,16 @@ const LoginPage = (props) => {
     const logIn = (e) => {
         e.preventDefault();
         
-        if ( form.username && form.username.length === 0 ) { return }
-        if ( form.username && form.password.length === 0 ) { return }
+        if ( form.username && form.username.length === 0 ) { return };
+        if ( form.password && form.password.length === 0 ) { return };
 
-        let data = JSON.stringify(form);
-        api.post("api/token/", data)
+        let data = structuredClone(form);
+
+        if (form.username.includes('@')) {
+            data = {password: data.password, email: data.username};
+        };
+
+        api.post("api/token/", JSON.stringify(data))
             .then( res => {
                 console.log("Res?.data:", res?.data);
                 res?.data && updateAuthData({tokens: res.data});
@@ -40,6 +45,15 @@ const LoginPage = (props) => {
                 if (!err?.response?.status) return 
 
                 if (err?.response?.status === 423) {
+                    navigate(
+                        "/verify", 
+                        { 
+                            replace: true, 
+                            state: { 
+                                email: data.email,
+                                password: data.password,
+                            } 
+                        });
                 } else {
                 }
             });

@@ -22,8 +22,8 @@ const InputSubmit = ({title, style, onClick }) => {
                 fontSize: '1.2rem',
                 fontWeight: '900',
                 textAlign: 'center',
-                marginTop: '.5rem',
-                marginBottom: '.5rem',
+                // marginTop: '.5rem',
+                // marginBottom: '.5rem',
                 cursor: 'pointer',
                 ...style,
             }}
