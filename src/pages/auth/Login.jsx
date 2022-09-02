@@ -2,10 +2,13 @@
 import { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { useNavigate, Link } from "react-router-dom";
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import Divider from '@mui/material/Divider';
-import TextField from '@mui/material/TextField';
+import { 
+    Box,
+    Divider,
+    Stack,
+    Button,
+    TextField,
+} from '@mui/material';
 
 import { PageContainer } from "pages/pageContainer";
 import { useAxios } from 'hooks/exports';
@@ -23,12 +26,24 @@ const LoginPage = (props) => {
 
     const navigate = useNavigate();
     const [form, setForm] = useState({});
+    const [errors, setErrors] = useState({});
 
     const logIn = () => {
+
+        let isError = false;
         
         if ( Object.keys(form).length < 2 ) { return };
         if ( form.username && form.username.length === 0 ) { return };
-        if ( form.password && form.password.length === 0 ) { return };
+
+        // Password 1
+        if ( (form.password === '') || (form.password && form.password.length < 8) ) {
+            setErrors( (e) => ({...e, password: 'Password must be at least 8 characters long'}) );
+            isError = true;
+        } else {
+            setErrors((e) => { delete e['password']; return e; });
+        }
+
+        if (isError) return;
 
         let data = structuredClone(form);
 
@@ -45,8 +60,12 @@ const LoginPage = (props) => {
             })
             .catch( err => {
                 console.log("Err:", err);
+                // console.log("Data 1:", err?.response?.data);
                 if (!err?.response?.data) return;
                 if (!err?.response?.status) return 
+                console.log("Data 2:", err?.response?.data);
+                setErrors({...errors, ...err?.response?.data});
+
 
                 if (err?.response?.status === 423) {
                     navigate(
@@ -96,14 +115,29 @@ const LoginPage = (props) => {
                     },
                 }}
             >
+                { Object.keys(errors).length > 0 && 
+                    <Box 
+                        sx={{
+                            backgroundColor: theme.palette.error.dark,
+                            borderRadius: '.3rem',
+                            p: 1,
+                        }}
+                    >
+                        { Object.values(errors).map( (txt, index) => 
+                            <Box key={index}>{txt}</Box>
+                        )}
+                    </Box>
+                }
                 <TextField 
+                    error={ !!errors?.username }
                     value={ form.username || '' } 
                     onChange={ (e) => setForm({...form, username: e.target.value}) }
                     sx={{textAlign: 'center'}}
-                    label={'username'}
+                    label={'username / email'}
                     required={true}
                 />
                 <TextField 
+                    error={ !!errors?.password }
                     value={ form.password || '' } 
                     onChange={ (e) => setForm({...form, password: e.target.value}) } 
                     label={'password'}

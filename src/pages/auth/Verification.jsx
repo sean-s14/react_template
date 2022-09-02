@@ -2,9 +2,12 @@
 import { useEffect, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { useNavigate, useLocation } from "react-router-dom";
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
+import { 
+    Box,
+    Stack,
+    Button,
+    TextField,
+} from '@mui/material';
 
 import { PageContainer } from "pages/pageContainer";
 import { useAxios } from 'hooks/exports';
@@ -23,6 +26,10 @@ const VerificationPage = (props) => {
     const navigate = useNavigate();
     let location = useLocation();
     const [form, setForm] = useState({});
+    const [errors, setErrors] = useState({});
+
+    useEffect( () => console.log("Errors:", errors), [errors])
+    useEffect( () => console.log("Form:", form), [form])
 
     useEffect( () => {
         console.log('Location State:', location.state);
@@ -30,19 +37,19 @@ const VerificationPage = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const verify = (e) => {
-        e.preventDefault();
+    const verify = () => {
+
+        let isError = false;
         
-        // if ( form.username && form.username.length === 0 ) { return }
-        if ( form.email && form.email.length === 0 ) { return }
-        if ( form.password && form.password.length < 8 ) { 
-            // Add error/warning messages
-            return 
+        // Code
+        if ( (form.code === '') || (form.code && form.code.length !== 6) ) {
+            setErrors( (e) => ({...e, code: 'The code you entered is invalid'}) );
+            isError = true;
+        } else {
+            setErrors((e) => { delete e['code']; return e; });
         }
-        if ( form.password2 && form.password2.length < 8 ) { 
-            // Add error/warning messages
-            return
-        }
+
+        if (isError) return;
 
         let data = JSON.stringify(form);
         api.post("api/token/", data)
@@ -55,6 +62,7 @@ const VerificationPage = (props) => {
                 console.log("Err:", err);
                 if (!err?.response?.data) return;
                 if (!err?.response?.status) return 
+                setErrors( e => ({...e, ...err?.response?.data}) );
 
                 if (err?.response?.status === 423) {
                 } else {
@@ -79,7 +87,7 @@ const VerificationPage = (props) => {
                 spacing={2} 
                 direction="column"
                 sx={{
-                    width: '12rem',
+                    width: '14rem',
                     '& > button, & > div': {
                         width: '100%',
                         color: theme.palette.primary.light,
@@ -93,7 +101,21 @@ const VerificationPage = (props) => {
                     },
                 }}
             >
+                { Object.keys(errors).length > 0 && 
+                    <Box 
+                        sx={{
+                            backgroundColor: theme.palette.error.dark,
+                            borderRadius: '.3rem',
+                            p: 1,
+                        }}
+                    >
+                        { Object.values(errors).map( (txt, index) => 
+                            <Box key={index} sx={{fontSize: '1rem !important'}}>&#8226; {txt}</Box>
+                        )}
+                    </Box>
+                }
                 <TextField 
+                    error={ !!errors?.code }
                     value={ form.code || '' } 
                     onChange={ (e) => setForm({...form, code: e.target.value}) } 
                     label={'code'}
