@@ -15,6 +15,7 @@ const useAuthData = () => {
 
     const [email, setEmail] = useState(null);
     const [username, setUsername] = useState(null);
+    const [photo, setPhoto] = useState(null);
 
     const [loading, setLoading] = useState(true);
 
@@ -36,6 +37,9 @@ const useAuthData = () => {
 
             let username = access?.username;
             username ? setUsername(username) : setUsername(''); 
+
+            let photo = access?.imageURI;
+            photo ? setPhoto(photo) : setPhoto(''); 
         } else {
             setAccessToken(undefined)
         }
@@ -70,6 +74,7 @@ const useAuthData = () => {
         profile: {
             email: email, 
             username: username, 
+            photo: photo,
         },
     };
 }

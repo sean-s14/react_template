@@ -1,14 +1,23 @@
 import { useState, useEffect } from 'react';
 import { useTheme } from '@mui/material/styles';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import Divider from '@mui/material/Divider';
-import TextField from '@mui/material/TextField';
+import { 
+    Avatar,
+    Badge,
+    Divider,
+    Stack,
+    Button,
+    TextField,
+    IconButton,
+    Input,
+    InputLabel,
+} from '@mui/material';
 import { Link } from 'react-router-dom';
 
 import { PageContainer } from "pages/pageContainer";
 import { useAxios, useAuthData } from 'hooks/exports';
 import { useAuthUpdate } from 'contexts/exports';
+import DefaultUser from 'static/images/default-user.jpg';
+import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 
 
 const SettingsPage = (props) => {
@@ -19,7 +28,7 @@ const SettingsPage = (props) => {
     // Auth
     const updateAuthData = useAuthUpdate();
     const api = useAxios();
-    const { profile, loading } = useAuthData();
+    const { profile, isLoading } = useAuthData();
 
     const [userInfo, setUserInfo] = useState({});
 
@@ -27,9 +36,9 @@ const SettingsPage = (props) => {
         console.log('Profile:', profile);
     }, [profile])
 
-    // useEffect( () => {
-    //     console.log('Username:', userInfo.username)
-    // }, [userInfo])
+    useEffect( () => {
+        console.log('User Info:', userInfo)
+    }, [userInfo])
 
     const handleUsername = (e) => {
         setUserInfo({...userInfo, username: e.target.value});
@@ -51,7 +60,31 @@ const SettingsPage = (props) => {
             .catch( err => console.log(err));
     };
 
-    if (loading) return null;
+    const handlePhoto = (e) => {
+        console.log('Handling Photo...');
+        let file = e.target.files[0];
+        console.log("File:", file)
+        function getBase64(file, cb) {
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                cb(reader.result)
+            };
+            reader.onerror = function (error) {
+                console.log('Error: ', error);
+            };
+        }
+
+        let res = '';
+        getBase64(file, (result) => {
+            // res = result;
+            setUserInfo({...userInfo, imageURI: result})
+            // console.log("Result:", result);
+        })
+        console.log(res);
+    };
+
+    if (isLoading) return null;
 
     return (
         <PageContainer 
@@ -67,6 +100,7 @@ const SettingsPage = (props) => {
                 spacing={3} 
                 direction="column"
                 sx={{
+                    alignItems: 'center',
                     width: '18rem',
                     '& > button, & > div': {
                         width: '100%',
@@ -83,6 +117,45 @@ const SettingsPage = (props) => {
                     },
                 }}
             >
+
+                <Badge
+                    overlap="circular"
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                    badgeContent={
+                        <IconButton>
+                            <InputLabel 
+                                htmlFor={"photo-upload"} 
+                                sx={{
+                                    maxWidth: '3rem', 
+                                    maxHeight: '3rem',
+                                }}
+                            >
+                                <ChangeCircleIcon sx={{ fontSize: "3rem" }} />
+                            </InputLabel>
+                            <Input 
+                                id={"photo-upload"}
+                                type={"file"} 
+                                hidden={true}
+                                onChange={ e => handlePhoto(e) }
+                                sx={{display: 'none'}}
+                            >
+                            </Input>
+                        </IconButton>
+                    }
+                >    
+                    <Avatar 
+                        alt="Default User"
+                        src={ profile.photo || DefaultUser }
+                        sx={{ 
+                            width: 200,
+                            maxWidth: 200,
+                            height: 200,
+                            maxHeight: 200,
+                        }}
+                        variant={"circular"}
+                    />
+                </Badge>
+
                 <TextField 
                     value={ userInfo.username || profile.username || '' } 
                     placeholder={ 'username' }
@@ -103,13 +176,9 @@ const SettingsPage = (props) => {
                 >
                     Save Changes
                 </Button>
-                <Divider />
-                <Button 
-                    variant="contained" 
-                    sx={{}}
-                >
-                    <Link to="">Change Photo</Link>
-                </Button>
+
+                <Divider sx={{width: '100%'}} />
+
                 <Button 
                     variant="contained" 
                     sx={{}}
