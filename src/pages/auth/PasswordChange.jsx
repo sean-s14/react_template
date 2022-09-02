@@ -1,9 +1,11 @@
 
 import { useState, useEffect } from 'react';
 import { useTheme } from '@mui/material/styles';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
+import {
+    Stack,
+    Button,
+    TextField,
+} from '@mui/material';
 
 import { PageContainer } from "pages/pageContainer";
 import { useAxios } from 'hooks/exports';
@@ -21,9 +23,9 @@ const PasswordChangePage = (props) => {
 
     const [form, setForm] = useState({});
 
-    // useEffect( () => {
-    //     console.log("Form:", form);
-    // }, [form])
+    useEffect( () => {
+        console.log("Form:", form);
+    }, [form])
     
     const handlePassword = (e, field) => {
         setForm({...form, [field]: e.target.value});

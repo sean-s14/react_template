@@ -1,10 +1,12 @@
 
 import { useEffect, useState } from 'react';
-// import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import { useNavigate, useLocation } from "react-router-dom";
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
 
 import { PageContainer } from "pages/pageContainer";
-import { Input, FormButton, Form } from "components/exports";
 import { useAxios } from 'hooks/exports';
 import { useAuthUpdate } from 'contexts/exports';
 
@@ -12,7 +14,7 @@ import { useAuthUpdate } from 'contexts/exports';
 const VerificationPage = (props) => {
 
     // Theme
-    // const theme = useTheme();
+    const theme = useTheme();
 
     // Auth
     const updateAuthData = useAuthUpdate();
@@ -73,14 +75,41 @@ const VerificationPage = (props) => {
             }}
         >
             <h1>Verify Your Account</h1>
-            <Form onSubmit={ verify } >
-                <Input
-                    placeholder={"code"} 
-                    value={ form.code } 
+            <Stack 
+                spacing={2} 
+                direction="column"
+                sx={{
+                    width: '12rem',
+                    '& > button, & > div': {
+                        width: '100%',
+                        color: theme.palette.primary.light,
+                        fontSize: '1rem',
+                        '& *': {
+                            fontSize: '1.3rem',
+                        },
+                        '& input': {
+                            textAlign: 'center',
+                        },
+                    },
+                }}
+            >
+                <TextField 
+                    value={ form.code || '' } 
                     onChange={ (e) => setForm({...form, code: e.target.value}) } 
+                    label={'code'}
+                    // type={"password"}
+                    required={true}
                 />
-                <FormButton title={"Verify"} />
-            </Form>
+                <Button 
+                    variant="contained" 
+                    sx={{}}
+                    onClick={ verify }
+                >
+                    Verify
+                </Button>
+
+            </Stack>
+
         </PageContainer>
     )
 }

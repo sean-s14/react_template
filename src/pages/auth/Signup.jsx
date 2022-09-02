@@ -4,8 +4,8 @@ import { useTheme } from '@mui/material/styles';
 import { useNavigate, Link } from "react-router-dom";
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
+import Divider from '@mui/material/Divider';
 
 import { PageContainer } from "pages/pageContainer";
 import { useAxios } from 'hooks/exports';
@@ -115,7 +115,7 @@ const SignupPage = (props) => {
                     required={true}
                 />
                 <TextField 
-                    value={ form.password || '' } 
+                    value={ form.password2 || '' } 
                     onChange={ (e) => setForm({...form, password2: e.target.value}) } 
                     label={'password again'}
                     type={"password"}
@@ -131,6 +131,12 @@ const SignupPage = (props) => {
 
                 <Divider />
                 
+                <Button 
+                    variant="contained" 
+                    sx={{}}
+                >
+                    <Link to="/login">Already have an account?</Link>
+                </Button>
                 <Button 
                     variant="contained" 
                     sx={{}}
