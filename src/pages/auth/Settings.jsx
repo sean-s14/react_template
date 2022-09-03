@@ -4,6 +4,7 @@ import {
     Avatar,
     Badge,
     Divider,
+    Box,
     Stack,
     Button,
     TextField,
@@ -31,13 +32,20 @@ const SettingsPage = (props) => {
     const { profile, isLoading } = useAuthData();
 
     const [userInfo, setUserInfo] = useState({});
+    const fields = ['username', 'email']
+    const [errors, setErrors] = useState({});
 
     useEffect( () => {
         console.log('Profile:', profile);
     }, [profile])
 
     useEffect( () => {
-        console.log('User Info:', userInfo)
+        console.log('User Info:', userInfo);
+        
+        let email = userInfo?.email
+        // email.length === 0 ? console.log('Yes') : console.log('No');
+        email === '' ? console.log('Yes') : console.log('No');
+        console.log("Email:", userInfo?.email)
     }, [userInfo])
 
     const handleUsername = (e) => {
@@ -48,16 +56,20 @@ const SettingsPage = (props) => {
         setUserInfo({...userInfo, email: e.target.value});
     };
 
-    const saveChanges = (e) => {
+    const saveChanges = () => {
 
-        let data = JSON.stringify(userInfo);
-        api.patch("auth/user/", data)
+        api.patch("auth/user/", JSON.stringify(userInfo))
             .then( res => {
                 console.log("Res?.data:", res?.data);
                 res?.data && updateAuthData({tokens: res.data});
                 setUserInfo({});
+                setErrors({});
             })
-            .catch( err => console.log(err));
+            .catch( err => {
+                if (!err?.response?.data) return;
+                if (!err?.response?.status) return 
+                setErrors( (e) => ({...e, ...err?.response?.data}) );
+            });
     };
 
     const handlePhoto = (e) => {
@@ -78,7 +90,7 @@ const SettingsPage = (props) => {
         let res = '';
         getBase64(file, (result) => {
             // res = result;
-            setUserInfo({...userInfo, imageURI: result})
+            setUserInfo( (u) => ({...u, imageURI: result}) )
             // console.log("Result:", result);
         })
         console.log(res);
@@ -94,8 +106,6 @@ const SettingsPage = (props) => {
                 alignItems: 'center',
             }}
         >
-            <h1>Settings</h1>
-
             <Stack 
                 spacing={3} 
                 direction="column"
@@ -145,7 +155,7 @@ const SettingsPage = (props) => {
                 >    
                     <Avatar 
                         alt="Default User"
-                        src={ profile.photo || DefaultUser }
+                        src={ userInfo?.imageURI || profile.photo || DefaultUser }
                         sx={{ 
                             width: 200,
                             maxWidth: 200,
@@ -156,15 +166,47 @@ const SettingsPage = (props) => {
                     />
                 </Badge>
 
+                {   
+                    Object.keys(errors).filter( (key) => 
+                        !fields.includes(key) 
+                    ).length > 0 &&
+                    <Box 
+                        sx={{
+                            backgroundColor: theme.palette.error.dark,
+                            borderRadius: '.3rem',
+                            p: 1,
+                        }}
+                    >
+                        { Object.entries(errors).map( ([key, val], index) => 
+                            !fields.includes(key) && <Box key={index}>{val}</Box>
+                        )}
+                    </Box>
+                }
                 <TextField 
-                    value={ userInfo.username || profile.username || '' } 
+                    error={ !!errors?.username }
+                    helperText={ errors?.username }
+                    value={ 
+                        userInfo?.username 
+                        // eslint-disable-next-line no-new-wrappers
+                        || (userInfo?.username === '' && new String(""))
+                        || profile.username 
+                        || '' 
+                    } 
                     placeholder={ 'username' }
                     onChange={ handleUsername }
                     sx={{textAlign: 'center'}}
                     label={'username'}
                 />
                 <TextField 
-                    value={ userInfo.email || profile.email || '' } 
+                    error={ !!errors?.email }
+                    helperText={errors?.email}
+                    value={ 
+                        userInfo?.email
+                        // eslint-disable-next-line no-new-wrappers
+                        || (userInfo?.email === '' && new String(""))
+                        || profile.email 
+                        || '' 
+                    } 
                     placeholder={ 'email' }
                     onChange={ handleEmail } 
                     label={'email'}

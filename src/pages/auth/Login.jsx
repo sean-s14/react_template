@@ -26,17 +26,23 @@ const LoginPage = (props) => {
 
     const navigate = useNavigate();
     const [form, setForm] = useState({});
+    const fields = ['username', 'password']
     const [errors, setErrors] = useState({});
 
     const logIn = () => {
 
         let isError = false;
         
-        if ( Object.keys(form).length < 2 ) { return };
-        if ( form.username && form.username.length === 0 ) { return };
+        // Username
+        if ( (!form?.username) || (form?.username === '') || (form?.username && form.username.length === 0) ) {
+            setErrors( (e) => ({...e, username: 'You must enter a username or email'}) );
+            isError = true;
+        } else {
+            setErrors((e) => { delete e['username']; return e; });
+        }
 
-        // Password 1
-        if ( (form.password === '') || (form.password && form.password.length < 8) ) {
+        // Password
+        if ( (!form?.password) || (form?.password === '') || (form?.password && form.password.length < 8) ) {
             setErrors( (e) => ({...e, password: 'Password must be at least 8 characters long'}) );
             isError = true;
         } else {
@@ -59,13 +65,9 @@ const LoginPage = (props) => {
                 navigate("/", { replace: true });
             })
             .catch( err => {
-                console.log("Err:", err);
-                // console.log("Data 1:", err?.response?.data);
                 if (!err?.response?.data) return;
                 if (!err?.response?.status) return 
-                console.log("Data 2:", err?.response?.data);
-                setErrors({...errors, ...err?.response?.data});
-
+                setErrors( e => ({...e, ...err?.response?.data}) );
 
                 if (err?.response?.status === 423) {
                     navigate(
@@ -73,11 +75,11 @@ const LoginPage = (props) => {
                         { 
                             replace: true, 
                             state: { 
-                                email: data.email,
+                                email: form.email,
+                                username: form.username,
                                 password: data.password,
                             } 
                         });
-                } else {
                 }
             });
     };
@@ -115,7 +117,10 @@ const LoginPage = (props) => {
                     },
                 }}
             >
-                { Object.keys(errors).length > 0 && 
+                {   
+                    Object.keys(errors).filter( (key) => 
+                        !fields.includes(key) 
+                    ).length > 0 &&
                     <Box 
                         sx={{
                             backgroundColor: theme.palette.error.dark,
@@ -123,13 +128,14 @@ const LoginPage = (props) => {
                             p: 1,
                         }}
                     >
-                        { Object.values(errors).map( (txt, index) => 
-                            <Box key={index}>{txt}</Box>
+                        { Object.entries(errors).map( ([key, val], index) => 
+                            !fields.includes(key) && <Box key={index}>{val}</Box>
                         )}
                     </Box>
                 }
                 <TextField 
                     error={ !!errors?.username }
+                    helperText={ errors?.username }
                     value={ form.username || '' } 
                     onChange={ (e) => setForm({...form, username: e.target.value}) }
                     sx={{textAlign: 'center'}}
@@ -138,6 +144,7 @@ const LoginPage = (props) => {
                 />
                 <TextField 
                     error={ !!errors?.password }
+                    helperText={ errors?.password }
                     value={ form.password || '' } 
                     onChange={ (e) => setForm({...form, password: e.target.value}) } 
                     label={'password'}

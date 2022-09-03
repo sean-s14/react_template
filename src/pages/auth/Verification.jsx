@@ -26,14 +26,21 @@ const VerificationPage = (props) => {
     const navigate = useNavigate();
     let location = useLocation();
     const [form, setForm] = useState({});
+    const fields = ['code'];
     const [errors, setErrors] = useState({});
 
     useEffect( () => console.log("Errors:", errors), [errors])
+    useEffect( () => {
+        console.log("Errors:", errors)
+        let e = Object.entries(errors)
+        console.log(e);
+    }, [errors])
+
     useEffect( () => console.log("Form:", form), [form])
 
     useEffect( () => {
         console.log('Location State:', location.state);
-        setForm({...form, ...location.state})
+        setForm( f => ({...f, ...location.state}) )
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -42,12 +49,12 @@ const VerificationPage = (props) => {
         let isError = false;
         
         // Code
-        if ( (form.code === '') || (form.code && form.code.length !== 6) ) {
-            setErrors( (e) => ({...e, code: 'The code you entered is invalid'}) );
-            isError = true;
-        } else {
-            setErrors((e) => { delete e['code']; return e; });
-        }
+        // if ( (!!form?.code) || (form.code === '') || (form.code && form.code.length !== 6) ) {
+        //     setErrors( (e) => ({...e, code: 'The code you entered is invalid'}) );
+        //     isError = true;
+        // } else {
+        //     setErrors((e) => { delete e['code']; return e; });
+        // }
 
         if (isError) return;
 
@@ -57,16 +64,12 @@ const VerificationPage = (props) => {
                 console.log("Res?.data:", res?.data);
                 res?.data && updateAuthData({tokens: res.data});
                 navigate("/", { replace: true });
+                setErrors({});
             })
             .catch( err => {
-                console.log("Err:", err);
                 if (!err?.response?.data) return;
                 if (!err?.response?.status) return 
                 setErrors( e => ({...e, ...err?.response?.data}) );
-
-                if (err?.response?.status === 423) {
-                } else {
-                }
             });
     };
 
@@ -101,7 +104,10 @@ const VerificationPage = (props) => {
                     },
                 }}
             >
-                { Object.keys(errors).length > 0 && 
+                {   
+                    Object.keys(errors).filter( (key) => 
+                        !fields.includes(key) 
+                    ).length > 0 &&
                     <Box 
                         sx={{
                             backgroundColor: theme.palette.error.dark,
@@ -109,13 +115,14 @@ const VerificationPage = (props) => {
                             p: 1,
                         }}
                     >
-                        { Object.values(errors).map( (txt, index) => 
-                            <Box key={index} sx={{fontSize: '1rem !important'}}>&#8226; {txt}</Box>
+                        { Object.entries(errors).map( ([key, val], index) => 
+                            !fields.includes(key) && <Box key={index}>{val}</Box>
                         )}
                     </Box>
                 }
                 <TextField 
                     error={ !!errors?.code }
+                    helperText={ errors?.code }
                     value={ form.code || '' } 
                     onChange={ (e) => setForm({...form, code: e.target.value}) } 
                     label={'code'}

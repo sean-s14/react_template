@@ -24,6 +24,7 @@ const SignupPage = (props) => {
 
     const navigate = useNavigate();
     const [form, setForm] = useState({});
+    const fields = ['username', 'email', 'password', 'password2']
     const [errors, setErrors] = useState({});
 
     useEffect( () => console.log("Errors:", errors), [errors])
@@ -39,7 +40,7 @@ const SignupPage = (props) => {
         }
         
         // Email
-        if ( !form?.email || (form.email === '') || (form.email && form.email.length === 0) ) {
+        if ( (!form?.email) || (form.email === '') || (form.email && form.email.length === 0) ) {
             setErrors( (e) => ({...e, email: 'Your email address is required'}) );
             isError = true;
         } else {
@@ -47,7 +48,7 @@ const SignupPage = (props) => {
         }
 
         // Password 1
-        if ( (form.password === '') || (form.password && form.password.length < 8) ) {
+        if ( (!form?.password) || (form?.password === '') || (form?.password && form.password.length < 8) ) {
             setErrors( (e) => ({...e, password: 'Password 1: must be at least 8 characters long'}) );
             isError = true;
         } else {
@@ -55,7 +56,7 @@ const SignupPage = (props) => {
         }
         
         // Password 2
-        if ( (form.password2 === '') || (form.password2 && form.password2.length < 8) ) {
+        if ( (!form?.password2) || (form.password2 === '') || (form.password2 && form.password2.length < 8) ) {
             console.log('Password 2 is empty');
             setErrors( (e) => ({...e, password2: 'Password 2: must be at least 8 characters long'}) );
             isError = true;
@@ -79,14 +80,9 @@ const SignupPage = (props) => {
                     });
             })
             .catch( err => {
-                console.log("Err:", err);
                 if (!err?.response?.data) return;
                 if (!err?.response?.status) return 
                 setErrors( e => ({...e, ...err?.response?.data}) );
-
-                if (err?.response?.status === 423) {
-                } else {
-                }
             });
     };
 
@@ -123,7 +119,10 @@ const SignupPage = (props) => {
                     },
                 }}
             >
-                { Object.keys(errors).length > 0 && 
+                {   
+                    Object.keys(errors).filter( (key) => 
+                        !fields.includes(key) 
+                    ).length > 0 &&
                     <Box 
                         sx={{
                             backgroundColor: theme.palette.error.dark,
@@ -131,13 +130,14 @@ const SignupPage = (props) => {
                             p: 1,
                         }}
                     >
-                        { Object.values(errors).map( (txt, index) => 
-                            <Box key={index}>{txt}</Box>
+                        { Object.entries(errors).map( ([key, val], index) => 
+                            !fields.includes(key) && <Box key={index}>{val}</Box>
                         )}
                     </Box>
                 }
                 <TextField 
                     error={ !!errors?.username }
+                    helperText={ errors?.username }
                     value={ form.username || '' } 
                     onChange={ (e) => setForm({...form, username: e.target.value}) }
                     sx={{textAlign: 'center'}}
@@ -145,6 +145,7 @@ const SignupPage = (props) => {
                 />
                 <TextField 
                     error={ !!errors?.email }
+                    helperText={ errors?.email }
                     value={ form.email || '' } 
                     onChange={ (e) => setForm({...form, email: e.target.value}) } 
                     label={'email'}
@@ -153,6 +154,7 @@ const SignupPage = (props) => {
                 />
                 <TextField 
                     error={ !!errors?.password }
+                    helperText={ errors?.password }
                     value={ form.password || '' } 
                     onChange={ (e) => setForm({...form, password: e.target.value}) } 
                     label={'password'}
@@ -161,6 +163,7 @@ const SignupPage = (props) => {
                 />
                 <TextField 
                     error={ !!errors?.password2 }
+                    helperText={ errors?.password2 }
                     value={ form.password2 || '' } 
                     onChange={ (e) => setForm({...form, password2: e.target.value}) } 
                     label={'password again'}
