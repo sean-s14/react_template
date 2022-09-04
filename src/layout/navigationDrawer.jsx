@@ -1,30 +1,41 @@
-import * as React from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
+import { 
+    Box,
+    Drawer,
+    Button,
+    Divider,
 
-// List
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
+    // List
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemIcon,
+    ListItemText,
+} from '@mui/material';
 
 // Icons
-import HomeIcon from '@mui/icons-material/Home';
-import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
-import FeedIcon from '@mui/icons-material/Feed';
-import ArticleIcon from '@mui/icons-material/Article';
-import DevicesIcon from '@mui/icons-material/Devices';
-import MenuIcon from '@mui/icons-material/Menu';
-import LoginIcon from '@mui/icons-material/Login';
-import LogoutIcon from '@mui/icons-material/Logout';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';  // For signup
-import SettingsIcon from '@mui/icons-material/Settings';
+import {
+    Home,
+    QuestionMark,
+    Feed,
+    Article,
+    Devices,
+    Menu,
+    
+    // Auth
+    Login,
+    Logout,
+    PersonAdd,
+    Settings,
+    
+    // Socials
+    // GitHub,
+    // LinkedIn,
+    // Telegram,
+    // Twitter,
+} from '@mui/icons-material';
 
 import { useTheme } from "@mui/material/styles";
 
@@ -42,7 +53,7 @@ export default function NavigationDrawer() {
         // console.log("Access Tokens:", auth?.tokens?.access)
     }, [auth])
 
-    const [state, setState] = React.useState({ left: false });
+    const [state, setState] = useState({ left: false });
 
     const toggleDrawer = (anchor, open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -55,17 +66,17 @@ export default function NavigationDrawer() {
         {
             name: "Home",
             path: "/",
-            icon: <HomeIcon />
+            icon: <Home />
         },
         {
             name: "Projects",
             path: "projects",
-            icon: <DevicesIcon />
+            icon: <Devices />
         },
         {
             name: "Articles",
             path: "articles",
-            icon: <ArticleIcon />
+            icon: <Article />
         },
     ]
 
@@ -73,12 +84,12 @@ export default function NavigationDrawer() {
         {
             name: "About",
             path: "about",
-            icon: <QuestionMarkIcon />
+            icon: <QuestionMark />
         },
         {
             name: "Policies",
             path: "policies",
-            icon: <FeedIcon />
+            icon: <Feed />
         },
     ]
 
@@ -86,28 +97,28 @@ export default function NavigationDrawer() {
         ? routes2.push({
             name: "Settings",
             path: "settings",
-            icon: <SettingsIcon />,
+            icon: <Settings />,
             },
             {
             name: "Logout",
             path: "logout",
-            icon: <LogoutIcon />,
+            icon: <Logout />,
             func: () => authUpdate("clear")
             })
         : routes2.push({
             name: "Login",
             path: "login",
-            icon: <LoginIcon />
+            icon: <Login />
             },
             {
             name: "Signup",
             path: "signup",
-            icon: <PersonAddIcon />
+            icon: <PersonAdd />
             })
 
-    useEffect( () => {
-        console.log(theme)
-    }, [theme])
+    // useEffect( () => {
+    //     console.log(theme)
+    // }, [theme])
 
     const list = (anchor) => (
         <Box
@@ -119,18 +130,18 @@ export default function NavigationDrawer() {
             <List>
                 {routes1.map(({name, path, icon}, index) => (
                     <ListItem key={index} disablePadding>
-                    <Link 
-                        to={path} 
-                        style={{
-                            width: "100%", 
-                            textDecoration: "none", 
-                            color: theme.palette.text.primary
-                        }}>
-                        <ListItemButton>
-                            <ListItemIcon>{icon}</ListItemIcon>
-                            <ListItemText primary={name} />
-                        </ListItemButton>
-                    </Link>
+                        <Link 
+                            to={path} 
+                            style={{
+                                width: "100%", 
+                                textDecoration: "none", 
+                                color: theme.palette.text.primary
+                            }}>
+                            <ListItemButton>
+                                <ListItemIcon>{icon}</ListItemIcon>
+                                <ListItemText primary={name} />
+                            </ListItemButton>
+                        </Link>
                     </ListItem>
                 ))}
             </List>
@@ -174,6 +185,10 @@ export default function NavigationDrawer() {
                     </ListItem>
                 ))}
             </List>
+
+            <Divider />
+
+
         </Box>
     );
 
@@ -182,7 +197,7 @@ export default function NavigationDrawer() {
     return (
         <>
             <Button onClick={toggleDrawer(anchor, true)}>
-                <MenuIcon fontSize='large' />
+                <Menu fontSize='large' />
             </Button>
             <Drawer
                 anchor={anchor}
