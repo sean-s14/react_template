@@ -18,12 +18,14 @@ import {
 import NavigationDrawer from 'layout/navigationDrawer';
 import { useAuth } from 'contexts/exports';
 import { useEffect, useState } from 'react';
+import LoadingScreen from 'LoadingScreen';
 
 
 export default function App() {
   
   const auth = useAuth();
   const [loggedIn, setLoggedIn] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect( () => {
     console.log("Auth:", auth);
@@ -31,7 +33,9 @@ export default function App() {
     setLoggedIn(!!auth?.tokens?.access);
   }, [auth])
 
-  if (loggedIn === null) return null;
+  useEffect( () => setLoading(false), []);
+
+  if (loading === true || loggedIn === null) return <LoadingScreen />;
 
   return (
     <>
