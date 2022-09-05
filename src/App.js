@@ -5,9 +5,13 @@ import {
   HomePage,
   ProjectsPage,
   ArticlesPage,
+
+  // Site
   AboutPage,
   PoliciesPage,
+  ContactPage,
 
+  // Auth
   LoginPage,
   SignupPage,
   VerificationPage,
@@ -48,6 +52,7 @@ export default function App() {
         <Route path="articles" element={<ArticlesPage />}/>
         <Route path="about" element={<AboutPage />}/>
         <Route path="policies" element={<PoliciesPage />}/>
+        <Route path="contact" element={<ContactPage />}/>
 
         { !loggedIn
           ? <>

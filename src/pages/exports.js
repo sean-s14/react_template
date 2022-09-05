@@ -1,8 +1,13 @@
 import { HomePage } from "./homePage";
 import { ProjectsPage } from "./other/projectsPage";
 import { ArticlesPage } from "./other/articlesPage";
-import { AboutPage } from "./aboutPage";
-import { PoliciesPage } from "./policiesPage";
+
+// Site
+import AboutPage from "./site/aboutPage";
+import PoliciesPage from "./site/policiesPage";
+import ContactPage from "./site/contactPage";
+
+// Auth
 import LoginPage from "./auth/Login";
 import SignupPage from "./auth/Signup";
 import VerificationPage from "./auth/Verification";
@@ -14,9 +19,13 @@ export {
     HomePage,
     ProjectsPage,
     ArticlesPage,
+
+    // Site
     AboutPage,
     PoliciesPage,
+    ContactPage,
 
+    // Auth
     LoginPage,
     SignupPage,
     VerificationPage,
