@@ -106,7 +106,7 @@ const SignupPage = (props) => {
                     width: '18rem',
                     '& > button, & > div': {
                         width: '100%',
-                        color: theme.palette.primary.light,
+                        color: theme.palette.mode === 'dark' && theme.palette.primary.light,
                         fontSize: '1rem',
                         '& > input': {
                             fontSize: '1.3rem',
@@ -114,7 +114,7 @@ const SignupPage = (props) => {
                         '& > a': {
                             fontSize: '1rem',
                             textDecoration: 'none',
-                            color: theme.palette.primary.light
+                            color: 'inherit'
                         }
                     },
                 }}
@@ -171,8 +171,7 @@ const SignupPage = (props) => {
                     required={true}
                 />
                 <Button 
-                    variant="contained" 
-                    sx={{}}
+                    variant="contained"
                     onClick={ signUp }
                 >
                     Signup
@@ -180,16 +179,10 @@ const SignupPage = (props) => {
 
                 <Divider />
                 
-                <Button 
-                    variant="contained" 
-                    sx={{}}
-                >
+                <Button variant="contained">
                     <Link to="/login">Already have an account?</Link>
                 </Button>
-                <Button 
-                    variant="contained" 
-                    sx={{}}
-                >
+                <Button variant="contained">
                     <Link to="/password-reset">Forgot Your Password?</Link>
                 </Button>
             </Stack>

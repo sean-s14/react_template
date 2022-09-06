@@ -91,9 +91,9 @@ const VerificationPage = (props) => {
                 direction="column"
                 sx={{
                     width: '14rem',
-                    '& > button, & > div': {
+                    '& > *': {
                         width: '100%',
-                        color: theme.palette.primary.light,
+                        color: theme.palette.mode === 'dark' && theme.palette.primary.light,
                         fontSize: '1rem',
                         '& *': {
                             fontSize: '1.3rem',

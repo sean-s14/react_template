@@ -102,18 +102,18 @@ const LoginPage = (props) => {
                 direction="column"
                 sx={{
                     width: '18rem',
-                    '& > button, & > div': {
+                    '& > *': {
                         width: '100%',
-                        color: theme.palette.primary.light,
+                        color: theme.palette.mode === 'dark' && theme.palette.primary.light,
                         fontSize: '1rem',
                         '& > input': {
                             fontSize: '1.3rem',
                         },
                         '& > a': {
-                            fontSize: '1rem',
+                            color: 'inherit',
+                            fontSize: 'inherit',
                             textDecoration: 'none',
-                            color: theme.palette.primary.light
-                        }
+                        },
                     },
                 }}
             >
@@ -138,7 +138,6 @@ const LoginPage = (props) => {
                     helperText={ errors?.username }
                     value={ form.username || '' } 
                     onChange={ (e) => setForm({...form, username: e.target.value}) }
-                    sx={{textAlign: 'center'}}
                     label={'username / email'}
                     required={true}
                 />
@@ -151,26 +150,16 @@ const LoginPage = (props) => {
                     type={"password"}
                     required={true}
                 />
-                <Button 
-                    variant="contained" 
-                    sx={{}}
-                    onClick={ logIn }
-                >
+                <Button variant="contained" onClick={ logIn }>
                     Login
                 </Button>
 
                 <Divider />
                 
-                <Button 
-                    variant="contained" 
-                    sx={{}}
-                >
+                <Button variant="contained">
                     <Link to="/signup">Don't have an account?</Link>
                 </Button>
-                <Button 
-                    variant="contained" 
-                    sx={{}}
-                >
+                <Button variant="contained">
                     <Link to="/password-reset">Forgot Your Password?</Link>
                 </Button>
             </Stack>

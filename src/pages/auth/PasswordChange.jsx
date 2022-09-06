@@ -106,10 +106,10 @@ const PasswordChangePage = (props) => {
                 direction="column"
                 sx={{
                     width: '18rem',
-                    '& > button': {
-                        color: theme.palette.primary.light,
+                    '& > *': {
+                        color: theme.palette.mode === 'dark' && theme.palette.primary.light,
                         fontSize: '1rem',
-                    }
+                    },
                 }}
             >
                 { Object.keys(successMessages).length > 0 && 

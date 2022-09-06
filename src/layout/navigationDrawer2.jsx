@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import { Link } from "react-router-dom";
 
@@ -40,6 +40,7 @@ import {
     ChevronRight,
     OpenInNew,
     Call,
+    Brightness6,
     
     // Auth
     Login,
@@ -53,7 +54,7 @@ import {
     Telegram,
     Twitter,
 } from '@mui/icons-material';
-import { useAuth, useAuthUpdate } from 'contexts/exports';
+import { useAuth, useAuthUpdate, ThemeContext } from 'contexts/exports';
 import { useVariables } from 'hooks/exports';
 
 
@@ -184,6 +185,8 @@ export default function NavigationDrawer2(props) {
     const mobile = useMediaQuery(`(min-width: ${vars.mobile})`)
 
     const theme = useTheme();
+    const themeMode = useContext(ThemeContext);
+
     
     const [open, setOpen] = useState(false);
     const [subForm, setSubForm] = useState(false);
@@ -306,6 +309,15 @@ export default function NavigationDrawer2(props) {
                     <Typography variant="h6" noWrap component="div">
                         React Template
                     </Typography>
+                    <IconButton     
+                        aria-label={"theme"}
+                        onClick={ themeMode.toggleTheme }
+                        sx={{
+                            ml: 'auto'
+                        }}
+                    >
+                        <Brightness6 fontSize={"large"} />
+                    </IconButton>
                 </Toolbar>
             </AppBar>
 

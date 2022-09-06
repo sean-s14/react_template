@@ -1,23 +1,26 @@
 import App from './App';
-import './App.css';
+// import './App.css';
 
-import { AuthProvider } from 'contexts/exports';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+// import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import { AuthProvider, ToggleTheme } from 'contexts/exports';
 
-const darkTheme = createTheme({
-    palette: { mode: "dark" },
-    typography: { fontFamily: "Nunito, Roboto, Arial" },
-  })
+
+// const darkTheme = createTheme({
+//     palette: { mode: "dark" },
+//     typography: { fontFamily: "Nunito, Roboto, Arial" },
+// })
 
 export default function Provider({children}) {
 
     return (
         <AuthProvider>
-            <ThemeProvider theme={darkTheme}>
+            <ToggleTheme>
+            {/* <ThemeProvider theme={darkTheme}> */}
                 <CssBaseline /> {/* To apply the above theme */}
                 <App />
-            </ThemeProvider>
+            {/* </ThemeProvider> */}
+            </ToggleTheme>
         </AuthProvider>
     )
 }

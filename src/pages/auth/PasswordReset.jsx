@@ -152,6 +152,14 @@ const PasswordResetPage = (props) => {
                 direction="column"
                 sx={{
                     width: '18rem',
+                    '& > *': {
+                        color: theme.palette.mode === 'dark' && theme.palette.primary.light,
+                        fontSize: '1rem',
+                        '& > input': {
+                            fontSize: '1.3rem',
+                            color: 'inherit'
+                        }
+                    },
                 }}
             >
                 {   Object.keys(errors).length > 0 && 
@@ -175,13 +183,11 @@ const PasswordResetPage = (props) => {
                                 helperText={ errors?.email }
                                 value={ form.email || '' } 
                                 onChange={ (e) => setForm({...form, email: e.target.value}) }
-                                sx={{}}
                                 label={'email'}
                                 required={true}
                             />
                             <Button 
                                 variant="contained" 
-                                sx={{ color: theme.palette.primary.light }}
                                 onClick={ sendEmail }
                             >
                                 Send Email
@@ -195,13 +201,11 @@ const PasswordResetPage = (props) => {
                                 helperText={ errors?.code }
                                 value={ form.code || '' } 
                                 onChange={ (e) => setForm({...form, code: e.target.value}) }
-                                sx={{}}
                                 label={'code'}
                                 required={true}
                             />
                             <Button 
                                 variant="contained" 
-                                sx={{ color: theme.palette.primary.light }}
                                 onClick={ verifyCode }
                             >
                                 Verify Code
@@ -216,7 +220,6 @@ const PasswordResetPage = (props) => {
                                 helperText={ errors?.new_password }
                                 value={ form.new_password || '' } 
                                 onChange={ (e) => setForm({...form, new_password: e.target.value}) }
-                                sx={{}}
                                 label={'new password'}
                                 type={"password"}
                                 required={true}
@@ -226,14 +229,12 @@ const PasswordResetPage = (props) => {
                                 helperText={ errors?.new_password2 }
                                 value={ form.new_password2 || '' } 
                                 onChange={ (e) => setForm({...form, new_password2: e.target.value}) }
-                                sx={{}}
                                 label={'new password again'}
                                 type={"password"}
                                 required={true}
                             />
                             <Button 
                                 variant="contained" 
-                                sx={{ color: theme.palette.primary.light }}
                                 onClick={ updatePass }
                             >
                                 Reset Password

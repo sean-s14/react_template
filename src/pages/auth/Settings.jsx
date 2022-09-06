@@ -112,17 +112,17 @@ const SettingsPage = (props) => {
                 sx={{
                     alignItems: 'center',
                     width: '18rem',
-                    '& > button, & > div': {
+                    '& > *': {
                         width: '100%',
-                        color: theme.palette.primary.light,
+                        color: theme.palette.mode === 'dark' && theme.palette.primary.light,
                         fontSize: '1rem',
                         '& > input': {
                             fontSize: '1.3rem',
                         },
                         '& > a': {
-                            fontSize: '1rem',
+                            color: 'inherit',
+                            fontSize: 'inherit',
                             textDecoration: 'none',
-                            color: theme.palette.primary.light
                         }
                     },
                 }}
@@ -131,6 +131,7 @@ const SettingsPage = (props) => {
                 <Badge
                     overlap="circular"
                     anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                    sx={{width: 'auto'}}
                     badgeContent={
                         <IconButton>
                             <InputLabel 
