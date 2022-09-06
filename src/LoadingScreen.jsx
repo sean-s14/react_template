@@ -12,7 +12,14 @@ const LoadingScreen = (props) => {
                 height: '100vh',
             }}
         >
-            <img src={logo512} alt="React Logo" />
+            <img 
+                src={logo512} 
+                alt="React Logo" 
+                style={{
+                    maxWidth: '70vw',
+                    maxHeight: '70vh',
+                }} 
+            />
         </div>
     )
 }

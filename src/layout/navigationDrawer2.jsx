@@ -3,6 +3,7 @@ import { styled, useTheme } from '@mui/material/styles';
 import { Link } from "react-router-dom";
 
 import {
+    useMediaQuery,
     // MuiDrawer,
     // MuiAppBar,
     Toolbar,
@@ -180,6 +181,7 @@ export default function NavigationDrawer2(props) {
     const auth = useAuth();
     const authUpdate = useAuthUpdate();
     const vars = useVariables()
+    const mobile = useMediaQuery(`(min-width: ${vars.mobile})`)
 
     const theme = useTheme();
     
@@ -308,7 +310,7 @@ export default function NavigationDrawer2(props) {
             </AppBar>
 
             
-            <Drawer variant="permanent" open={open} vars={vars}>
+            <Drawer variant={mobile || open ? "permanent" : "temporary"} open={open} vars={vars}>
                 <DrawerHeader vars={vars}>
                     <IconButton onClick={handleDrawerClose}>
                         {theme.direction === 'rtl'
