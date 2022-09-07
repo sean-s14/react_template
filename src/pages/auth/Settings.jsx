@@ -213,8 +213,7 @@ const SettingsPage = (props) => {
                     label={'email'}
                 />
                 <Button 
-                    variant="contained" 
-                    sx={{}}
+                    variant="contained"
                     onClick={ saveChanges }
                 >
                     Save Changes
@@ -222,10 +221,7 @@ const SettingsPage = (props) => {
 
                 <Divider sx={{width: '100%'}} />
 
-                <Button 
-                    variant="contained" 
-                    sx={{}}
-                >
+                <Button variant="contained">
                     <Link to="/password-change">Change Password</Link>
                 </Button>
             </Stack>

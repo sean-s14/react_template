@@ -8,6 +8,8 @@ There are some pages already created with the navigation setup:
 - Articles
 - About
 - Policies
+- Contact
+- Links to socials
 
 ---
 ### Packages
@@ -16,6 +18,9 @@ There are some pages already created with the navigation setup:
 - `@emotion/react`
 - `@emotion/styled`
 - `@mui/icons-material`
+- `axios`
+- `dayjs`
+- `jwt-decode`
 
 ---
 ### Not Included

@@ -354,6 +354,7 @@ export default function NavigationDrawer2(props) {
                                 whiteSpace: 'normal',
                                 paddingLeft: '15px',
                                 paddingRight: '15px',
+                                marginBottom: '20px',
                             }}
                             >
                             Copyright &#169; {new Date().getFullYear()} ReactTemplate. All Rights Reserved
@@ -364,8 +365,8 @@ export default function NavigationDrawer2(props) {
             </Drawer>
 
 
-            <Dialog open={subForm} onClose={handleSubscribeClose}>
-                <DialogContent sx={{width: '350px'}}>
+            <Dialog open={subForm} onClose={handleSubscribeClose} sx={{width: '100vw'}} >
+                <DialogContent sx={{width: mobile ? '350px' : 'auto'}}>
                     <TextField
                         autoFocus
                         id="name"
