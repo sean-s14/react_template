@@ -1,5 +1,5 @@
 
-import { PageContainer } from "pages/pageContainer";
+import { PageContainer } from "layout/pageContainer";
 
 const HomePage = () => {
 

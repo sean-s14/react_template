@@ -2,7 +2,7 @@
 // import { useState, useEffect } from 'react';
 // import { useTheme } from '@mui/material/styles';
 
-import { PageContainer } from "pages/pageContainer";
+import { PageContainer } from "layout/pageContainer";
 
 
 const ArticlesPage = (props) => {

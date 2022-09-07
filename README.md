@@ -47,6 +47,8 @@ npm start
 ```
 
 - Change `name` in `package.json`
+- Modify variables in `.env` if necessary
+- Add `.env` to `.gitignore`
 
 ```bash
 git add .

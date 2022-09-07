@@ -6,9 +6,9 @@ import { useAuth, useAuthUpdate } from 'contexts/exports';
 
 
 const baseURL = process.env.NODE_ENV === 'development'
-    ? 'http://192.168.1.153:9000/'
+    ? process.env.REACT_APP_DJANGO_ADDRESS
     : process.env.NODE_ENV === 'production'
-        ? 'http://192.168.1.153:9000/'
+        ? process.env.REACT_APP_DJANGO_ADDRESS
         : null
 
 

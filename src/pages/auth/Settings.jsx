@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-import { PageContainer } from "pages/pageContainer";
+import { PageContainer } from "layout/pageContainer";
 import { useAxios, useAuthData } from 'hooks/exports';
 import { useAuthUpdate } from 'contexts/exports';
 import DefaultUser from 'static/images/default-user.jpg';

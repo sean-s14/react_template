@@ -19,8 +19,7 @@ import {
   PasswordChangePage,
   PasswordResetPage,
 } from 'pages/exports';
-// import NavigationDrawer from 'layout/navigationDrawer';
-import NavigationDrawer2 from 'layout/navigationDrawer2';
+import NavigationDrawer from 'layout/navigationDrawer';
 import { useAuth } from 'contexts/exports';
 import { useEffect, useState } from 'react';
 import LoadingScreen from 'LoadingScreen';
@@ -45,7 +44,7 @@ export default function App() {
   return (
     <>
       {/* <NavigationDrawer /> */}
-      <NavigationDrawer2 />
+      <NavigationDrawer />
       <Routes>
         <Route path="/" element={<HomePage />}/>
         <Route path="projects" element={<ProjectsPage />}/>
