@@ -23,15 +23,6 @@ There are some pages already created with the navigation setup:
 - `jwt-decode`
 
 ---
-### Not Included
-
-There is no `.env` file. If you want to open development server on custom host and port then create an `.env` file and add the following:
-```
-HOST=xxx.xxx.x.xxx
-PORT=8000
-```
-
----
 The following policies can be generated [here](https://www.termsfeed.com/privacy-policy-generator/) :
 - Privacy Policy
 - Cookies Policy
@@ -41,3 +32,25 @@ The following policies can be generated [here](https://www.termsfeed.com/privacy
 - Return and Refund Policy
 - (TOS) Terms of Service
 - Terms of Use
+
+---
+## Setup
+
+```bash
+git clone https://github.com/shaun-ps-04/react_template.git .
+git remote remove origin  # rm -rf .git may render this useless
+rm -rf .git
+git init
+git branch -M main
+npm install
+npm start
+```
+
+- Change `name` in `package.json`
+
+```bash
+git add .
+git commit -m "Initial Commit"
+git remote add origin <path>
+git push -u origin main
+```
