@@ -18,6 +18,7 @@ const PasswordResetPage = (props) => {
 
     // Theme
     const theme = useTheme();
+	const styles = stylesheet(theme);
 
     // Auth
     // const updateAuthData = useAuthUpdate();
@@ -132,14 +133,9 @@ const PasswordResetPage = (props) => {
     };
 
 
-
     return (
         <PageContainer
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-            }}
+            style={styles.PageContainer}
         >
             <h1>
                 { stage === 0 && 'Enter your email' }
@@ -150,17 +146,7 @@ const PasswordResetPage = (props) => {
             <Stack 
                 spacing={2}
                 direction="column"
-                sx={{
-                    width: '18rem',
-                    '& > *': {
-                        color: theme.palette.mode === 'dark' && theme.palette.primary.light,
-                        fontSize: '1rem',
-                        '& > input': {
-                            fontSize: '1.3rem',
-                            color: 'inherit'
-                        }
-                    },
-                }}
+                sx={styles.StackStyle}
             >
                 {   Object.keys(errors).length > 0 && 
                     !Object.keys(errors).includes(['email', 'code', 'new_password', 'new_password2']) &&
@@ -249,5 +235,24 @@ const PasswordResetPage = (props) => {
         </PageContainer>
     )
 }
+
+const stylesheet = (theme) => ({
+    PageContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    StackStyle: {
+        width: '18rem',
+        '& > *': {
+            color: theme.palette.mode === 'dark' && theme.palette.primary.light,
+            fontSize: '1rem',
+            '& > input': {
+                fontSize: '1.3rem',
+                color: 'inherit'
+            }
+        },
+    },
+})
 
 export default PasswordResetPage;

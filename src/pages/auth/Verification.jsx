@@ -18,6 +18,7 @@ const VerificationPage = (props) => {
 
     // Theme
     const theme = useTheme();
+	const styles = stylesheet(theme);
 
     // Auth
     const updateAuthData = useAuthUpdate();
@@ -74,35 +75,13 @@ const VerificationPage = (props) => {
     };
 
     return (
-        <PageContainer
-            style={{
-                maxWidth: '100vw',
-                height: '100%',
-                maxHeight: '100vh',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-            }}
-        >
+        <PageContainer style={styles.PageContainer}>
             <h1>Verify Your Account</h1>
+
             <Stack 
                 spacing={2} 
                 direction="column"
-                sx={{
-                    width: '14rem',
-                    '& > *': {
-                        width: '100%',
-                        color: theme.palette.mode === 'dark' && theme.palette.primary.light,
-                        fontSize: '1rem',
-                        '& *': {
-                            fontSize: '1.3rem',
-                        },
-                        '& input': {
-                            textAlign: 'center',
-                        },
-                    },
-                }}
+                sx={styles.StackStyle}
             >
                 {   
                     Object.keys(errors).filter( (key) => 
@@ -142,5 +121,27 @@ const VerificationPage = (props) => {
         </PageContainer>
     )
 }
+
+const stylesheet = (theme) => ({
+    PageContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    StackStyle: {
+        width: '14rem',
+        '& > *': {
+            width: '100%',
+            color: theme.palette.mode === 'dark' && theme.palette.primary.light,
+            fontSize: '1rem',
+            '& *': {
+                fontSize: '1.3rem',
+            },
+            '& input': {
+                textAlign: 'center',
+            },
+        },
+    },
+})
 
 export default VerificationPage;
