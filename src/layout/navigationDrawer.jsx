@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
     useMediaQuery,
@@ -181,6 +181,7 @@ export default function NavigationDrawer2(props) {
 
     const auth = useAuth();
     const authUpdate = useAuthUpdate();
+    const navigate = useNavigate();
     const vars = useVariables()
     const mobile = useMediaQuery(`(min-width: ${vars.mobile})`)
 
@@ -226,7 +227,10 @@ export default function NavigationDrawer2(props) {
             name: "Logout",
             path: "logout",
             icon: <Logout />,
-            func: () => authUpdate("clear")
+            func: () => {
+                    authUpdate("clear");
+                    navigate("/", { replace: true });
+                }
             })
         : routes2.push({
             name: "Login",
