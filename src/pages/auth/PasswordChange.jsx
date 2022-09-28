@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { useTheme } from '@mui/material/styles';
 import {
     Box,
-    Stack,
     Button,
     TextField,
 } from '@mui/material';
@@ -11,6 +10,7 @@ import {
 import { PageContainer } from "layout/pageContainer";
 import { useAxios } from 'hooks/exports';
 // import { useAuthUpdate } from 'contexts/exports';
+import { CStack } from 'components/exports';
 
 
 const PasswordChangePage = (props) => {
@@ -96,10 +96,9 @@ const PasswordChangePage = (props) => {
         <PageContainer style={styles.PageContainer}>
             <h1>Change Password</h1>
 
-            <Stack 
+            <CStack 
                 spacing={2} 
                 direction="column"
-                sx={styles.StackStyle}
             >
                 { Object.keys(successMessages).length > 0 && 
                     <Box
@@ -168,7 +167,7 @@ const PasswordChangePage = (props) => {
                 >
                     Update Password
                 </Button>
-            </Stack>
+            </CStack>
         </PageContainer>
     )
 }
@@ -178,13 +177,6 @@ const stylesheet = (theme) => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-    },
-    StackStyle: {
-        width: '18rem',
-        '& > *': {
-            color: theme.palette.mode === 'dark' && theme.palette.primary.light,
-            fontSize: '1rem',
-        },
     },
 })
 
