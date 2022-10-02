@@ -56,3 +56,8 @@ git commit -m "Initial Commit"
 git remote add origin <path>
 git push -u origin main
 ```
+
+---
+
+Using upper case first letters for file names seems to cause a build failure on Netfliy
+To remedy, execute `git config core.ignorecase false` before pushing to github
