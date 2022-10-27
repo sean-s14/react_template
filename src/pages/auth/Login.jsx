@@ -58,7 +58,7 @@ const LoginPage = (props) => {
             data = {password: data.password, email: data.username};
         };
 
-        api.post("api/token/", JSON.stringify(data))
+        api.post("auth/login/", JSON.stringify(data))
             .then( res => {
                 console.log("Res?.data:", res?.data);
                 res?.data && updateAuthData({tokens: res.data});
@@ -83,6 +83,10 @@ const LoginPage = (props) => {
                         });
                 }
             });
+    };
+
+    const googleLogIn = () => {
+        window.open(`${process.env.REACT_APP_SERVER_ADDRESS}google`, "_self");
     };
 
     return (
@@ -132,6 +136,9 @@ const LoginPage = (props) => {
                 </Button>
 
                 <Divider />
+                <Button variant="contained" onClick={ googleLogIn }>
+                    Google Login
+                </Button>
                 
                 <Button variant="contained">
                     <Link to="/signup">Don't have an account?</Link>

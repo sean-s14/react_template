@@ -11,7 +11,7 @@ const useAuthData = () => {
     const auth = useAuth();
 
     const [accessToken, setAccessToken] = useState(null);
-    const [refreshToken, setRefreshToken] = useState(null);
+    // const [refreshToken, setRefreshToken] = useState(null);
 
     const [email, setEmail] = useState(null);
     const [username, setUsername] = useState(null);
@@ -27,11 +27,13 @@ const useAuthData = () => {
         // eslint-disable-next-line no-unused-vars
         let isMounted = true;
         // console.log("Use Auth Data has mounted...");
-        let accessToken = auth?.tokens?.access;
-        let refreshToken = auth?.tokens?.refresh;
+        // let accessToken = auth?.tokens?.access;
+        let accessToken = auth?.tokens?.accessToken;
+        // let refreshToken = auth?.tokens?.refresh;
 
         if (accessToken) {
             const access = jwt_decode(accessToken);
+            console.log("Access:", access);
             setAccessToken(access);
 
             let email = access?.email;
@@ -45,20 +47,20 @@ const useAuthData = () => {
         } else {
             setAccessToken(undefined)
         }
-        if (refreshToken) {
-            setRefreshToken(refreshToken);
-        } else {
-            setRefreshToken(undefined);
-        }
+        // if (refreshToken) {
+        //     setRefreshToken(refreshToken);
+        // } else {
+        //     setRefreshToken(undefined);
+        // }
 
         return () => { isMounted = false };
     }, [auth])
 
     useEffect( () => {
-        if (isObject(accessToken) && isObject(accessToken)) {
+        if (isObject(accessToken) /* && isObject(refreshToken) */) {
             if ( 
-                (Object.keys(accessToken).length > 0) &&
-                (Object.keys(refreshToken).length > 0)
+                (Object.keys(accessToken).length > 0) /* && 
+                (Object.keys(refreshToken).length > 0) */
             ) {
                 setLoggedIn(true);
                 setLoading(false);
@@ -66,11 +68,14 @@ const useAuthData = () => {
                 setLoggedIn(false);
                 setLoading(false);
             }
-        } else if ( (accessToken !== null) && (refreshToken !== null) ) {
+        } else if ( 
+            (accessToken !== null) 
+            // && (refreshToken !== null) 
+        ) {
             setLoggedIn(false);
             setLoading(false);
         }
-    }, [accessToken, refreshToken]);
+    }, [accessToken/*, refreshToken*/]);
 
     // useEffect( () => {
     //     if (loading) return;
@@ -82,9 +87,9 @@ const useAuthData = () => {
     return {
         isLoading: loading,
         isLoggedIn: loggedIn,
-        tokens: accessToken && refreshToken && {
+        tokens: accessToken /* && refreshToken */  && {
             access: accessToken,
-            refresh: refreshToken,
+            // refresh: refreshToken,
         }, 
         profile: {
             email: email, 

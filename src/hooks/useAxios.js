@@ -6,9 +6,9 @@ import { useAuth, useAuthUpdate } from 'contexts/exports';
 
 
 const baseURL = process.env.NODE_ENV === 'development'
-    ? process.env.REACT_APP_DJANGO_ADDRESS
+    ? process.env.REACT_APP_SERVER_ADDRESS
     : process.env.NODE_ENV === 'production'
-        ? process.env.REACT_APP_DJANGO_ADDRESS
+        ? process.env.REACT_APP_SERVER_ADDRESS
         : null
 
 
@@ -23,6 +23,7 @@ const useAxios = () => {
 
     const axiosInstance = axios.create({
         baseURL,
+        withCredentials: true,
         headers:{
             'Content-Type': 'application/json',
             Authorization: `Bearer ${auth?.tokens?.access}`
@@ -36,8 +37,9 @@ const useAxios = () => {
         // Gets new Refresh & Access tokens using current Refresh token
         const refreshTokens = () => {
             return axios.post(
-                `${baseURL}api/token/refresh/`,
-                {"refresh": auth?.tokens?.refresh},
+                `${baseURL}auth/refresh/`,
+                // {"refresh": auth?.tokens?.refresh},
+                {},
                 { headers: {'Content-Type': 'application/json'}}
             )
         }
