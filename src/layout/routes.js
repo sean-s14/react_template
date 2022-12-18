@@ -22,7 +22,7 @@ import {
 
 import { useNavigate } from "react-router-dom";
 import { useAuthUpdate } from 'contexts/exports';
-import { useAuthData } from 'hooks/exports';
+import { useReady, useAxios } from 'hooks/exports';
 
 
 const routes1 = [
@@ -87,8 +87,9 @@ const routes3 = [
 
 const useRoutes = () => {
 
+    const api = useAxios();
     const authUpdate = useAuthUpdate();
-    const { isLoggedIn } = useAuthData();
+    const { isLoggedIn } = useReady();
     const navigate = useNavigate();
 
     let routes2 = []
@@ -105,8 +106,11 @@ const useRoutes = () => {
                 path: "logout",
                 icon: <Logout />,
                 func: () => {
-                        authUpdate("clear");
-                        navigate("/", { replace: true });
+                        api.delete("/auth/logout")
+                        .then( res => {
+                            authUpdate("clear");
+                            navigate("/", { replace: true });
+                        }).catch( err => console.log(err))
                     }
             }
         )
