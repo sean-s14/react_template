@@ -13,6 +13,7 @@ import { PageContainer } from "layout/pageContainer";
 import { useAxios } from 'hooks/exports';
 import { useAuthUpdate } from 'contexts/exports';
 import { CStack } from 'components/exports';
+import { grey, red } from '@mui/material/colors';
 
 
 const LoginPage = (props) => {
@@ -22,7 +23,7 @@ const LoginPage = (props) => {
 	const styles = stylesheet(theme);
 
     // Auth
-    const updateAuthData = useAuthUpdate();
+    const updateAuth = useAuthUpdate();
     const api = useAxios();
 
     const navigate = useNavigate();
@@ -58,12 +59,17 @@ const LoginPage = (props) => {
             data = {password: data.password, email: data.username};
         };
 
-        api.post("auth/login/", JSON.stringify(data))
+        api.post("/auth/login/", JSON.stringify(data))
             .then( res => {
-                console.log("Res?.data:", res?.data);
-                res?.data && updateAuthData({tokens: res.data});
-                setForm({});
-                navigate("/", { replace: true });
+                api.get("/user/", { headers: { Authorization: `Bearer ${res?.data?.accessToken}`}})
+                    .then( res2 => {
+                        if (res2?.data) {
+                            updateAuth({ accessToken: res.data.accessToken, user: res2.data });
+                            setForm({});
+                            navigate("/", { replace: true });
+                        }
+                    })
+                    .catch(err => { console.error(err) });
             })
             .catch( err => {
                 if (!err?.response?.data) return;
@@ -86,7 +92,7 @@ const LoginPage = (props) => {
     };
 
     const googleLogIn = () => {
-        window.open(`${process.env.REACT_APP_SERVER_ADDRESS}google`, "_self");
+        window.open(`${process.env.REACT_APP_SERVER_ADDRESS}/google`, "_self");
     };
 
     return (
@@ -136,7 +142,15 @@ const LoginPage = (props) => {
                 </Button>
 
                 <Divider />
-                <Button variant="contained" onClick={ googleLogIn }>
+                <Button variant="contained" onClick={ googleLogIn } 
+                    sx={{
+                        backgroundColor: red[400], 
+                        color: `${grey[200]} !important`,
+                        '&:hover': {
+                            backgroundColor: red[700], 
+                        }
+                    }}
+                >
                     Google Login
                 </Button>
                 

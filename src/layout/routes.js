@@ -107,10 +107,10 @@ const useRoutes = () => {
                 icon: <Logout />,
                 func: () => {
                         api.delete("/auth/logout")
-                        .then( res => {
-                            authUpdate("clear");
-                            navigate("/", { replace: true });
-                        }).catch( err => console.log(err))
+                            .then( res => {
+                                authUpdate("clear");
+                                navigate("/", { replace: true });
+                            }).catch( err => console.log(err))
                     }
             }
         )
